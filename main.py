@@ -51,14 +51,57 @@ class Covid_chiffre():
       source_archive_cov.append(i[18])
       source_type_cov.append(i[19])
 
-    data_cov = [set(date_cov[0:]),set(granularite_cov[0:]),set(maille_code_cov[0:]),set(maille_nom_cov[0:]),set(cas_confirmes_cov[0:]),set(cas_ehpad_cov[0:]),set(cas_confirmes_ehpad_cov[0:]),set(cas_possibles_ehpad_cov[0:]),set(deces_cov[0:]),set(reanimation_cov[0:]),set(hospitalises_cov[0:]),set(nouvelles_hospitalisations_cov[0:]),set(nouvelles_reanimations_cov[0:]),set(gueris_cov[0:]),set(depistes_cov[0:]),set(source_nom_cov[0:]),set(source_url_cov[0:]),set(source_archive_cov[0:]),set(source_type_cov[0:])]
-    return(data_cov)
+    self.data_cov = [set(date_cov[0:]),set(granularite_cov[0:]),set(maille_code_cov[0:]),set(maille_nom_cov[0:]),cas_confirmes_cov[0:],cas_ehpad_cov[0:],cas_confirmes_ehpad_cov[0:],cas_possibles_ehpad_cov[0:],deces_cov[0:],reanimation_cov,hospitalises_cov[0:],nouvelles_hospitalisations_cov[0:],nouvelles_reanimations_cov[0:],gueris_cov[0:],depistes_cov[0:],set(source_nom_cov[0:]),set(source_url_cov[0:]),set(source_archive_cov[0:]),set(source_type_cov[0:])]
+
+    data_cov = self.data_cov
+    return(self.data_cov)
 
 
-Covid19 = Covid_chiffre()
 
+
+
+  def deces(self):
+    mort = []
+    
+    for row in self.chiffres_cov:
+      try:
+        mort.append(int(chiffres_covid[8]))
+      except :
+        mort.append(0)
+    
+    return(mort)
+
+
+
+
+
+
+
+
+
+
+
+f = open("chiffres-cles.csv")
+chiffres_covid = csv.reader(f)
+chiffres_covid = list(chiffres_covid)
 
 
 #variable pour verifier que ma methode ce balade bien dans les listes
+Covid19 = Covid_chiffre()
 listes = Covid19.data_covid()
-print(listes[8])
+#print(chiffres_covid[0])
+
+
+int_listes = []
+sujet = ""
+for i in chiffres_covid:
+  if i[8].isdigit():
+    int_listes.append(int(i[8]))
+
+  else:
+    if i[8] in ("date","granularite","maille_code","maille_nom","cas_confirmes","cas_ehpad","cas_confirmes_ehpad","cas_possibles_ehpad","deces","deces_ehpad","reanimation","hospitalises","nouvelles_hospitalisations","nouvelles_reanimations","gueris","depistes","source_nom","source_url","source_archive","source_type"):
+      print(i[8])
+    sujet= i[8]
+
+
+print(sum(int_listes),sujet)
